@@ -1,4 +1,5 @@
 # Objective : Create new case folder and analysis file if not existing already.
+# Setting in bashrc : alias ddncase='/bin/python3 /home/dinesh/project/ddncase/newcase.py'
 import sys, os
 from datetime import datetime
 from pathlib import Path
