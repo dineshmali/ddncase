@@ -48,13 +48,9 @@ if len(sys.argv) < 3:
     path = createDir(path, current_year_full)
     path = createDir(path,currentMonth)
     path = createDir(path, casenumber)
+    print(path)
     analysis_file_path = path +"/"+ casenumber + "_" +"analysis.txt"
     Path(analysis_file_path).touch()
-    output = subprocess.getoutput(f"wslpath -w {path}")
-    subprocess.run (['explorer.exe', output], stdout=subprocess.PIPE)
-    p1 = subprocess.Popen(["echo", output], stdout=subprocess.PIPE)
-    subprocess.run(["clip.exe"], stdin=p1.stdout)
-
 
 if len(sys.argv) > 2:
     try:
