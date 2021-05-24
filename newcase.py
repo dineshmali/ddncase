@@ -6,6 +6,12 @@ from pathlib import Path
 
 path = "/home/dinesh/test"
 
+subLog = {
+"sss" : "SHOW SUB SUM",
+"sssa" : "SHOW SUB SUM ALL",
+"ssf" : "SHOW SUB SUM FAULT"
+}
+
 def createDir(path, newdir):
     lsdir=(os.listdir(path))
     if newdir in lsdir:
@@ -19,25 +25,39 @@ def createDir(path, newdir):
         print(f"created new directory {newpath}")
         return newpath
 
+def printer(casenumber, custname, log):
+    mystring = subLog[log]
+    newstring = mystring.replace(" ", "_")
+    print(f"ssh user@[Controller 0 IP] {subLog[log]} > SR{casenumber}_{custname}_{newstring}_c0.txt")
+    print(f"ssh user@[Controller 1 IP] {subLog[log]} > SR{casenumber}_{custname}_{newstring}_c1.txt")
+
+def diagprinter(casenumber, custname):
+    print(f"ssh user@[Controller 0 IP] diag > SR{casenumber}_{custname}_diag_c0.tgz")
+    print(f"ssh user@[Controller 1 IP] diag > SR{casenumber}_{custname}_diag_c1.tgz")
 
 
-# print(f"Number of arguments: {len(sys.argv)} 'arguments.")
-# print(f"Argument List: {str(sys.argv)}")
+try:
+    casenumber = sys.argv[1]
+except:
+    casenumber = input("Plase provide case number: ")
 
-casenumber = str(123456)
-# try:
-#    casenumber = int(sys.argv[1])
-# except ValueError:
-#     print("Oops! That was not valid case number. Try again...")
+if len(sys.argv) < 3:
+    currentMonth = datetime.now().strftime('%h')
+    current_year_full = datetime.now().strftime('%Y')  
+    path = createDir(path, current_year_full)
+    path = createDir(path, casenumber)
+    analysis_file_path = path +"/"+ casenumber + "_" +"analysis.txt"
+    Path(analysis_file_path).touch()
 
-currentMonth = datetime.now().strftime('%h')
-current_year_full = datetime.now().strftime('%Y')  
-
-path = createDir(path, current_year_full)
-
-path = createDir(path, casenumber)
-
-analysis_file_path = newpath = path +"/"+ casenumber + "_" +"analysis.txt"
-
-Path(analysis_file_path).touch()
-
+if len(sys.argv) > 2:
+    try:
+        custname = sys.argv[2]
+    except:
+        custname = input("Plase provide customer name: ")
+    
+    for key in subLog:
+        if key in sys.argv[3:]:
+            printer(casenumber, custname, key)
+    if "diag" in sys.argv[3:] or "diags" in sys.argv[3:] :
+         diagprinter(casenumber, custname)
+    
