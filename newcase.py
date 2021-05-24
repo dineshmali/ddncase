@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-path = "/home/dinesh/test"
+path = "/home/dinesh/cases"
 
 subLog = {
 "sss" : "SHOW SUB SUM",
@@ -16,13 +16,13 @@ def createDir(path, newdir):
     lsdir=(os.listdir(path))
     if newdir in lsdir:
         pass
-        print("Directory exists")
+        # print("Directory exists")
         newpath = path +"/"+ newdir
         return newpath
     else:
         newpath = path +"/"+ newdir
         os.mkdir(newpath)
-        print(f"created new directory {newpath}")
+        # print(f"created new directory {newpath}")
         return newpath
 
 def printer(casenumber, custname, log):
@@ -45,6 +45,7 @@ if len(sys.argv) < 3:
     currentMonth = datetime.now().strftime('%h')
     current_year_full = datetime.now().strftime('%Y')  
     path = createDir(path, current_year_full)
+    path = createDir(path,currentMonth)
     path = createDir(path, casenumber)
     analysis_file_path = path +"/"+ casenumber + "_" +"analysis.txt"
     Path(analysis_file_path).touch()
