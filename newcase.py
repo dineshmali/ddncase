@@ -33,8 +33,8 @@ def printer(casenumber, custname, log):
     print(f"ssh user@[Controller 1 IP] {subLog[log]} > SR{casenumber}_{custname}_{newstring}_c1.txt")
 
 def diagprinter(casenumber, custname):
-    print(f"ssh user@[Controller 0 IP] diag > SR{casenumber}_{custname}_diag_c0.tgz")
-    print(f"ssh user@[Controller 1 IP] diag > SR{casenumber}_{custname}_diag_c1.tgz")
+    print(f"ssh diag@[Controller 0 IP] tgz lite > SR{casenumber}_{custname}_diag_lite_c0.tgz")
+    print(f"ssh diag@[Controller 1 IP] tgz lite > SR{casenumber}_{custname}_diag_lite_c1.tgz")
 
 
 try:
